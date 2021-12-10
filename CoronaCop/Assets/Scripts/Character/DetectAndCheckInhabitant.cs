@@ -9,7 +9,11 @@ public class DetectAndCheckInhabitant : MonoBehaviour
     {
         if (other.gameObject.tag == "InhabitantCheckZone")
         {
-            other.gameObject.GetComponent<QRCheck>().BeginCheckQR();
+            var state = other.gameObject.GetComponent<QRCheck>();
+            if (state.NeedToCheck)
+            {
+                state.BeginCheckQR();
+            }
         }
     }
 
@@ -17,7 +21,8 @@ public class DetectAndCheckInhabitant : MonoBehaviour
     {
         if (other.gameObject.tag == "InhabitantCheckZone")
         {
-            other.gameObject.GetComponent<QRCheck>().StopCheckQR();
+            var state = other.gameObject.GetComponent<QRCheck>();
+            state.StopCheckQR();
         }
     }
 }
