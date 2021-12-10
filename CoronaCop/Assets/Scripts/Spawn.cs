@@ -45,11 +45,11 @@ public class Spawn : MonoBehaviour
     
     private void createCar()
     {
-        GameObject instance = Instantiate(Resources.Load("Car", typeof(GameObject))) as GameObject;
+        GameObject instance = Instantiate(Resources.Load("Visitor", typeof(GameObject))) as GameObject;
         instance.GetComponent<idScript>().setId(GetComponent<idScript>().getId());
-        instance.GetComponent<MeshRenderer>().material.color = carColor;
+        instance.GetComponent<MeshRenderer>().material.color = Color.yellow;
         instance.transform.position = transform.position;
-        instance.transform.position = new Vector3(instance.transform.position.x,7.5f,instance.transform.position.z);
+        instance.transform.position = new Vector3(instance.transform.position.x,instance.transform.position.y,instance.transform.position.z);
         instance.transform.parent = transform.parent;
         var speed = acceleration;
         if (accelerationRandomization) speed += Random.Range(-acceleration / 4, acceleration / 4);

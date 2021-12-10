@@ -64,6 +64,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spawn
       objectReference: {fileID: 0}
+    - target: {fileID: 4921064476226010022, guid: dac9c4a25bc06e34a8c82daf8cfd6016,
+        type: 3}
+      propertyPath: m_TagString
+      value: SpawnPoint
+      objectReference: {fileID: 0}
     - target: {fileID: 4921064476226010023, guid: dac9c4a25bc06e34a8c82daf8cfd6016,
         type: 3}
       propertyPath: m_RootOrder
@@ -262,6 +267,11 @@ PrefabInstance:
     - target: {fileID: 469352552022085511, guid: 87b7bf0ea4880494f879700bea0f4e06,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 469352552883299413, guid: 87b7bf0ea4880494f879700bea0f4e06,
+        type: 3}
+      propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

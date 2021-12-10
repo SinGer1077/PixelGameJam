@@ -1,34 +1,44 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
+using System.Linq.Expressions;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
+using Random = UnityEngine.Random;
+
 
 public class Car : MonoBehaviour
 {
     private GameObject enemy;
-
     private float acceleration=200;
-
-    private Color carColor;
     private LevelCore levelCore;
     private float maxSpeed;
     private Rigidbody carBody;
-    
-    // Start is called before the first frame update
+    private string manState = "Created"; //Режим движения
+    private float timeInZone = 4f;
+    private float spreadingRadius=200f;
+    private Vector3 endPoint;
+    private Quaternion rotTarget;
+    private Rigidbody rb;
+    private float timeToRunningOut = 3f; //Время исчезновения
+    private float timerRunOut = 0;
+    private float aTimer = 0;
     void Start()
     {
         levelCore = GameObject.Find("Level").GetComponent<LevelCore>();
-        carColor = gameObject.GetComponent<MeshRenderer>().material.color;
+        rb = GetComponent<Rigidbody>();
         carBody = gameObject.GetComponent<Rigidbody>();
         enemy = FindEnemy(); //Поиск направления движения
-        if (enemy!=null) {var direction = enemy.transform.position - gameObject.transform.position;
+        if (enemy!=null) {
+            
+            var direction = enemy.transform.position - gameObject.transform.position;
             direction.y = 0;
             transform.rotation=Quaternion.LookRotation (enemy.transform.position - gameObject.transform.position, Vector3.up);
-            gameObject.GetComponent<MeshRenderer>().enabled = true;
+            rotTarget = transform.rotation;
+            gameObject.GetComponent<Renderer>().enabled = true;
             
         }
 
@@ -37,41 +47,82 @@ public class Car : MonoBehaviour
     void FixedUpdate()
     {
         if (levelCore == null) return;
-        if (levelCore.getActiveLight() == carColor && levelCore.getRunning())
+        if (levelCore.getRunning())
         {
-            if (carBody.velocity.magnitude < maxSpeed)
+            if (manState == "Created")
             {
-                CarMoving();
+                endPoint = enemy.transform.position +
+                           new Vector3(Random.Range(-spreadingRadius / 2, spreadingRadius / 2), 0, Random.Range(-spreadingRadius / 2,
+                               spreadingRadius / 2));
+                manState = "toEnemy";
+            }
+            if (manState == "toEnemy")
+            {
+                ToPoint();
+                transform.rotation=Quaternion.Lerp(transform.rotation, rotTarget, 0.08f);
                 
             }
 
-        }
-        else
-        {
-
-            if (carBody.velocity.magnitude > 25)
+            if (manState == "toEnemy" && (endPoint - transform.position).magnitude < spreadingRadius*2)
             {
-               
-                CarBraking(4);
-                
+                var vel = GetComponent<Rigidbody>().velocity.magnitude;
+                manState = "toPoint";
+                endPoint =enemy.transform.position + new Vector3(Random.Range(-spreadingRadius,spreadingRadius),0,Random.Range(-spreadingRadius,spreadingRadius));
+                GetComponent<Rigidbody>().velocity = (endPoint - transform.position).normalized * vel;
+                rotTarget=Quaternion.LookRotation (endPoint - gameObject.transform.position, Vector3.up);
             }
-            if (carBody.velocity.magnitude < 25 && carBody.velocity.magnitude>0)
-                    
+
+            if (manState == "toPoint")
             {
-                carBody.AddForce(-carBody.velocity,ForceMode.VelocityChange);
-            } 
+                transform.rotation=Quaternion.Lerp(transform.rotation, rotTarget, 0.08f);
+                ToPoint();
+            }
+
+            if (manState == "toPoint" && (endPoint - transform.position).magnitude < 10f)
+            {
+                GetComponent<Rigidbody>().velocity = Vector3.zero;
+                manState = "waiting";
+            }
+
+            if (manState == "waiting")
+            {
+                BrakingAfterCollision();
+                timeInZone -= Time.deltaTime;
+                if (timeInZone <= 0)
+                {
+                    manState = "runningOut";
+                }
+            }
+
+            if (manState == "runningOut")
+            {
+
+                if (timerRunOut == 0)
+                {
+                    endPoint = FindSpawn().transform.position;
+                    rotTarget=Quaternion.LookRotation (endPoint - gameObject.transform.position, Vector3.up);
+                    GetComponent<BoxCollider>().enabled = false;
+                    aTimer = timeToRunningOut;
+                    maxSpeed*= 2f;
+                    StartCoroutine(fadeInAndOut(gameObject, false, timeToRunningOut));
+                }
+
+                timerRunOut += Time.deltaTime;
+                transform.rotation=Quaternion.Lerp(transform.rotation, rotTarget, 0.08f);
+                ToPoint();
+                if (timerRunOut >= timeToRunningOut)
+                {
+                    manState = "Deleting";}
+            }
+
         }
-
-
-
-    
     }
 
     private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.name == "Car(Clone)")
         {
-            levelCore.gameOver();
+            //levelCore.gameOver();
         }
     }
 
@@ -87,19 +138,24 @@ public class Car : MonoBehaviour
 
     private void CarMoving()
     {
-        Vector3 vector = Vector3.Normalize(enemy.transform.position - gameObject.transform.position);
-        gameObject.GetComponent<Rigidbody>().AddForce(vector*acceleration);    
+        if (manState == "toEnemy")
+        {
+            Vector3 vector = Vector3.Normalize(endPoint - gameObject.transform.position);
+            gameObject.GetComponent<Rigidbody>().AddForce(vector*acceleration);    
+        }
+
+        if (manState == "toPoint" || manState=="runningOut")
+        {
+            Vector3 vector = Vector3.Normalize(endPoint - gameObject.transform.position);
+            gameObject.GetComponent<Rigidbody>().AddForce(vector*acceleration);    
+        }
+
     }
 
     private void CarBraking(int x)
     {
         Vector3 vector = Vector3.Normalize(enemy.transform.position - gameObject.transform.position);
         gameObject.GetComponent<Rigidbody>().AddForce(-x*carBody.velocity.normalized*acceleration);    
-    }
-
-    public void CarEndPoint()
-    {
-        Destroy(gameObject);
     }
 
     public void SetMaxSpeed(float x)
@@ -114,4 +170,132 @@ public class Car : MonoBehaviour
             point.GetComponent<idScript>().getId() == gameObject.GetComponent<idScript>().getId());
        // return points.FirstOrDefault(point => point.GetComponent<MeshRenderer>().material.color == carColor);
     }
+
+    private GameObject FindSpawn()
+    {
+        var points = GameObject.FindGameObjectsWithTag("SpawnPoint");
+        return points.First(point =>
+            point.GetComponent<idScript>().getId() == gameObject.GetComponent<idScript>().getId());
+    }
+
+    private void ToPoint()
+    {
+        if (carBody.velocity.magnitude < maxSpeed)
+        {
+            CarMoving();
+                
+        }
+    }
+
+    private void BrakingAfterCollision()
+    {
+        if (rb.velocity.magnitude > 10 && rb.velocity.magnitude != 0f)
+        {
+            rb.velocity /= 1.5f;
+                    
+        }
+        if (rb.velocity.magnitude < 10 && rb.velocity.magnitude != 0)
+        {
+            rb.velocity = Vector3.zero;
+        } 
+    }
+
+IEnumerator fadeInAndOut(GameObject objectToFade, bool fadeIn, float duration)
+{
+    float counter = 0f;
+
+    //Set Values depending on if fadeIn or fadeOut
+    float a, b;
+    if (fadeIn)
+    {
+        a = 0;
+        b = 1;
+    }
+    else
+    {
+        a = 1;
+        b = 0;
+    }
+
+    int mode = 0;
+    Color currentColor = Color.clear;
+
+    SpriteRenderer tempSPRenderer = objectToFade.GetComponent<SpriteRenderer>();
+    Image tempImage = objectToFade.GetComponent<Image>();
+    RawImage tempRawImage = objectToFade.GetComponent<RawImage>();
+    MeshRenderer tempRenderer = objectToFade.GetComponent<MeshRenderer>();
+    Text tempText = objectToFade.GetComponent<Text>();
+
+    //Check if this is a Sprite
+    if (tempSPRenderer != null)
+    {
+        currentColor = tempSPRenderer.color;
+        mode = 0;
+    }
+    //Check if Image
+    else if (tempImage != null)
+    {
+        currentColor = tempImage.color;
+        mode = 1;
+    }
+    //Check if RawImage
+    else if (tempRawImage != null)
+    {
+        currentColor = tempRawImage.color;
+        mode = 2;
+    }
+    //Check if Text 
+    else if (tempText != null)
+    {
+        currentColor = tempText.color;
+        mode = 3;
+    }
+
+    //Check if 3D Object
+    else if (tempRenderer != null)
+    {
+        currentColor = tempRenderer.material.color;
+        mode = 4;
+
+        //ENABLE FADE Mode on the material if not done already
+        tempRenderer.material.SetFloat("_Mode", 2);
+        tempRenderer.material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+        tempRenderer.material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+        tempRenderer.material.SetInt("_ZWrite", 0);
+        tempRenderer.material.DisableKeyword("_ALPHATEST_ON");
+        tempRenderer.material.EnableKeyword("_ALPHABLEND_ON");
+        tempRenderer.material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+        tempRenderer.material.renderQueue = 3000;
+    }
+    else
+    {
+        yield break;
+    }
+
+    while (counter < duration)
+    {
+        counter += Time.deltaTime;
+        float alpha = Mathf.Lerp(a, b, counter / duration);
+
+        switch (mode)
+        {
+            case 0:
+                tempSPRenderer.color = new Color(currentColor.r, currentColor.g, currentColor.b, alpha);
+                break;
+            case 1:
+                tempImage.color = new Color(currentColor.r, currentColor.g, currentColor.b, alpha);
+                break;
+            case 2:
+                tempRawImage.color = new Color(currentColor.r, currentColor.g, currentColor.b, alpha);
+                break;
+            case 3:
+                tempText.color = new Color(currentColor.r, currentColor.g, currentColor.b, alpha);
+                break;
+            case 4:
+                tempRenderer.material.color = new Color(currentColor.r, currentColor.g, currentColor.b, alpha);
+                break;
+        }
+        yield return null;
+    }
+}
 }

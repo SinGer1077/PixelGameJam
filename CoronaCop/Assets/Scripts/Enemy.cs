@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
     {
         core = GameObject.Find("Level").GetComponent<LevelCore>();
         setColor(gameObject.GetComponentInParent<UnitedObject>().getColor()); //Отладка
+        gameObject.GetComponent<MeshRenderer>().enabled = false;
     }
 
     // Update is called once per frame
@@ -25,8 +26,7 @@ public class Enemy : MonoBehaviour
         {
             if (other.gameObject.GetComponent<MeshRenderer>().material.color == myColor)
             {
-                core.colorsPlusCount(myColor);
-                other.gameObject.GetComponent<Car>().CarEndPoint();
+                //other.gameObject.GetComponent<Car>().CarEndPoint();
             }
         }
     }
