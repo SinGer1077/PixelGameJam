@@ -29,6 +29,7 @@ public class QRCheck : MonoBehaviour
     private void Start()
     {
         SetNeedToCheckTrue();
+        _renderer.gameObject.SetActive(false);
     }
 
     private void FixedUpdate()
@@ -76,6 +77,7 @@ public class QRCheck : MonoBehaviour
 
     public void SetNeedToCheckTrue()
     {
+        _renderer.gameObject.SetActive(true);
         _needToCheck = true;
         _updateCheckTimer = 0f;
         _renderer.color = Color.yellow;
@@ -83,6 +85,7 @@ public class QRCheck : MonoBehaviour
     
     private void SetNeedToCheckFalse()
     {
+        _renderer.gameObject.SetActive(true);
         _needToCheck = false;
         _updateCheckTimer = 0f;
         _renderer.color = Color.green;
