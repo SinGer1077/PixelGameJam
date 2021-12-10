@@ -6,10 +6,19 @@ public class CharacterRotator : MonoBehaviour
     private Transform _characterTrasform;
 
     [SerializeField]
-    private Rigidbody _characterRigidBody;
+    private CharacterMover _mover;
+
+    [SerializeField]
+    private float _rotationSpeed;
+
+    private float _timeCount = 0;
 
     private void Update()
     {
-        _characterTrasform.rotation.SetLookRotation(_characterRigidBody.velocity);
+        if (_mover._movementDirection != Vector3.zero)
+        {
+            Quaternion toRotation = Quaternion.LookRotation(_mover._movementDirection, Vector3.up);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, _rotationSpeed);
+        }        
     }
 }

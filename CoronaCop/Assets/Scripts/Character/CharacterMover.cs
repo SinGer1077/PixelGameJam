@@ -5,11 +5,17 @@ public class CharacterMover : MonoBehaviour
     [SerializeField]
     private float _characterSpeed;
 
-    [SerializeField]
-    private Rigidbody _rigidBody;
+    public Vector3 _movementDirection;
 
     private void Update()
     {
-        _rigidBody.velocity = new Vector3(Input.GetAxis("Horizontal") * _characterSpeed, _rigidBody.velocity.y, Input.GetAxis("Vertical") * _characterSpeed);
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
+
+        _movementDirection = new Vector3(horizontal, 0, vertical);
+        _movementDirection.Normalize();
+
+        transform.Translate(_movementDirection * _characterSpeed * Time.deltaTime, Space.World);
+
     }
 }
