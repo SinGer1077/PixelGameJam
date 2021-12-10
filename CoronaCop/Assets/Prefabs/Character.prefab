@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6030858499086589043}
   - component: {fileID: 6030858499086589042}
   - component: {fileID: 6030858499086589032}
+  - component: {fileID: 2642387552666022131}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -51,7 +52,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6030858499086589041}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -143,3 +144,15 @@ MonoBehaviour:
   _characterTrasform: {fileID: 6030858499086589039}
   _mover: {fileID: 6030858499086589042}
   _rotationSpeed: 720
+--- !u!114 &2642387552666022131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6030858499086589041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01eb3abeac8c2f943a29266ed849c5f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

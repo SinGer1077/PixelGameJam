@@ -16,6 +16,5 @@ public class CharacterMover : MonoBehaviour
         _movementDirection.Normalize();
 
         transform.Translate(_movementDirection * _characterSpeed * Time.deltaTime, Space.World);
-
     }
 }
