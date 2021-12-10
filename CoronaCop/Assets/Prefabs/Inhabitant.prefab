@@ -76,7 +76,7 @@ GameObject:
   - component: {fileID: 4952446494046158728}
   m_Layer: 0
   m_Name: Inhabitant
-  m_TagString: Inhebitant
+  m_TagString: Inhabitant
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -218,6 +218,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _infected: 0
+  _infectionZone: {fileID: 4952446494153072353}
+  _timeToInfect: 2
+  _renderer: {fileID: 4952446494046158729}
+  _infectedMaterial: {fileID: 2100000, guid: 0745d03b4c5d89e4e87707a69d641898, type: 2}
 --- !u!1 &6038258901835852496
 GameObject:
   m_ObjectHideFlags: 0
