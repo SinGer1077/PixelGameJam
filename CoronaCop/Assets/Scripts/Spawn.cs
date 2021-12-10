@@ -7,8 +7,8 @@ public class Spawn : MonoBehaviour
 {
     public Color carColor=Color.green;
     public float spawnSpeed = 2; //Частота спавна машинок
-    private float acceleration = 150; //Ускорение машинки
-    public float maxSpeed = 300; //Предел максимальной скорости машинки
+    private float acceleration; //Ускорение машинки
+    public float maxSpeed = 25; //Предел максимальной скорости машинки
     public bool accelerationRandomization = false; //Параметр, включающий рандомный элемент в скорости машинки
     public bool spawnRandomization = false; //Параметр, включающий рандомный элемент в промежутках спавна машинок
 
@@ -16,6 +16,7 @@ public class Spawn : MonoBehaviour
     public LevelCore levelCore;
     void Start()
     {
+        acceleration = maxSpeed+15f;
         setColor(gameObject.GetComponentInParent<UnitedObject>().getColor());
         levelCore=GameObject.Find("Level").GetComponent<LevelCore>();
         spawnTime =0;
@@ -52,9 +53,17 @@ public class Spawn : MonoBehaviour
         instance.transform.position = new Vector3(instance.transform.position.x,instance.transform.position.y,instance.transform.position.z);
         instance.transform.parent = transform.parent;
         var speed = acceleration;
-        if (accelerationRandomization) speed += Random.Range(-acceleration / 4, acceleration / 4);
+        //if (accelerationRandomization) speed += Random.Range(-acceleration / 4, acceleration / 4);
         instance.GetComponent<Car>().setSpeed(speed);
-        instance.GetComponent<Car>().SetMaxSpeed(maxSpeed);
+        if (accelerationRandomization)
+        {
+            instance.GetComponent<Car>().SetMaxSpeed(maxSpeed + Random.Range(-maxSpeed * 0.15f,maxSpeed*0.15f));
+        }
+        else
+        {
+            instance.GetComponent<Car>().SetMaxSpeed(maxSpeed);
+        }
+        
         instance.GetComponent<idScript>().setId(gameObject.GetComponent<idScript>().getId());
     }
 

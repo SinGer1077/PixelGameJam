@@ -13,13 +13,13 @@ using Random = UnityEngine.Random;
 public class Car : MonoBehaviour
 {
     private GameObject enemy;
-    private float acceleration=200;
+    private float acceleration;
     private LevelCore levelCore;
     private float maxSpeed;
     private Rigidbody carBody;
     private string manState = "Created"; //Режим движения
     private float timeInZone = 4f;
-    private float spreadingRadius=200f;
+    private float spreadingRadius=7f;
     private Vector3 endPoint;
     private Quaternion rotTarget;
     private Rigidbody rb;
@@ -78,7 +78,7 @@ public class Car : MonoBehaviour
                 ToPoint();
             }
 
-            if (manState == "toPoint" && (endPoint - transform.position).magnitude < 10f)
+            if (manState == "toPoint" && (endPoint - transform.position).magnitude < 5f)
             {
                 GetComponent<Rigidbody>().velocity = Vector3.zero;
                 manState = "waiting";
@@ -102,6 +102,7 @@ public class Car : MonoBehaviour
                     endPoint = FindSpawn().transform.position;
                     rotTarget=Quaternion.LookRotation (endPoint - gameObject.transform.position, Vector3.up);
                     GetComponent<BoxCollider>().enabled = false;
+                    rb.constraints = RigidbodyConstraints.FreezePositionY;
                     aTimer = timeToRunningOut;
                     maxSpeed*= 2f;
                     StartCoroutine(fadeInAndOut(gameObject, false, timeToRunningOut));

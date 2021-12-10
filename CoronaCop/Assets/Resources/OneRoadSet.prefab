@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 3228767842881950037}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -578, y: 0, z: -194}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children:
   - {fileID: 7531638357290994606}
   - {fileID: 3048262499682189556}
@@ -56,8 +56,23 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4921064476226010020, guid: dac9c4a25bc06e34a8c82daf8cfd6016,
         type: 3}
+      propertyPath: maxSpeed
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921064476226010020, guid: dac9c4a25bc06e34a8c82daf8cfd6016,
+        type: 3}
       propertyPath: spawnSpeed
-      value: 1.5
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921064476226010020, guid: dac9c4a25bc06e34a8c82daf8cfd6016,
+        type: 3}
+      propertyPath: spawnRandomization
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921064476226010020, guid: dac9c4a25bc06e34a8c82daf8cfd6016,
+        type: 3}
+      propertyPath: accelerationRandomization
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4921064476226010022, guid: dac9c4a25bc06e34a8c82daf8cfd6016,
         type: 3}
@@ -218,6 +233,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 469352552022085511, guid: 87b7bf0ea4880494f879700bea0f4e06,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 469352552022085511, guid: 87b7bf0ea4880494f879700bea0f4e06,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 469352552022085511, guid: 87b7bf0ea4880494f879700bea0f4e06,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 469352552022085511, guid: 87b7bf0ea4880494f879700bea0f4e06,
         type: 3}
