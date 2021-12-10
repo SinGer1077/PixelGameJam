@@ -19,7 +19,7 @@ public class Car : MonoBehaviour
     private Rigidbody carBody;
     private string manState = "Created"; //Режим движения
     private float timeInZone = 4f;
-    private float spreadingRadius=7f;
+    private float spreadingRadius=10f;
     private Vector3 endPoint;
     private Quaternion rotTarget;
     private Rigidbody rb;
@@ -52,8 +52,8 @@ public class Car : MonoBehaviour
             if (manState == "Created")
             {
                 endPoint = enemy.transform.position +
-                           new Vector3(Random.Range(-spreadingRadius / 2, spreadingRadius / 2), 0, Random.Range(-spreadingRadius / 2,
-                               spreadingRadius / 2));
+                           new Vector3(Random.Range(-spreadingRadius, spreadingRadius), 0, Random.Range(-spreadingRadius,
+                               spreadingRadius));
                 manState = "toEnemy";
             }
             if (manState == "toEnemy")
@@ -119,6 +119,11 @@ public class Car : MonoBehaviour
         }
     }
 
+    public void CopSayGoOut()
+    {
+        manState = "runningOut";
+        timerRunOut = 0;
+    }
     private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.name == "Car(Clone)")

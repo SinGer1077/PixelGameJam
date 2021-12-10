@@ -11,6 +11,7 @@ public class Spawn : MonoBehaviour
     public float maxSpeed = 25; //Предел максимальной скорости машинки
     public bool accelerationRandomization = false; //Параметр, включающий рандомный элемент в скорости машинки
     public bool spawnRandomization = false; //Параметр, включающий рандомный элемент в промежутках спавна машинок
+    public float infectedChance;
 
     private float spawnTime;
     public LevelCore levelCore;
@@ -52,6 +53,10 @@ public class Spawn : MonoBehaviour
         instance.transform.position = transform.position;
         instance.transform.position = new Vector3(instance.transform.position.x,instance.transform.position.y,instance.transform.position.z);
         instance.transform.parent = transform.parent;
+        if ((1f - Random.Range(0f, 1f)) < infectedChance)
+        {
+            instance.GetComponentInChildren<InfectionState>().SetInfection();
+        }
         var speed = acceleration;
         //if (accelerationRandomization) speed += Random.Range(-acceleration / 4, acceleration / 4);
         instance.GetComponent<Car>().setSpeed(speed);

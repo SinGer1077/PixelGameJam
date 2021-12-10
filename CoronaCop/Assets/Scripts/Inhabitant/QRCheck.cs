@@ -46,11 +46,12 @@ public class QRCheck : MonoBehaviour
 
             if (_infection.Infected)
             {
-                Debug.Log("Чертила заражён, ломай его");
+                GetComponentInParent<Car>().CopSayGoOut(); //Р“РѕРЅРёРј РµРіРѕ РІ С€РµСЋ
+                Debug.Log("Р§РµСЂС‚РёР»Р° Р·Р°СЂР°Р¶С‘РЅ, Р»РѕРјР°Р№ РµРіРѕ");
             }
             else
             {
-                Debug.Log("Чертила чист, отпускаем");
+                Debug.Log("Р§РµСЂС‚РёР»Р° С‡РёСЃС‚, РѕС‚РїСѓСЃРєР°РµРј");
             }
         }
 
