@@ -21,7 +21,7 @@ public class UnitedObject : MonoBehaviour
         {
             color=color,
             countWin = 0,
-            endPoint = parts.First(part =>part.name=="EndCube"),
+            //endPoint = parts.First(part =>part.name=="EndCube"),
             spawn = parts.First(part =>part.name=="Spawn"),
 
         });
