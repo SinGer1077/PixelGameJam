@@ -61,7 +61,7 @@ public class InfectionProgressCounter : MonoBehaviour
     {
         _currentCount++;
         _plusOne.Play();
-        MoveProgressBar();
+        MoveProgressBar(1);
         CheckGameLosed();
         Invoke("StopParticleSystemFirst", 1f);
     }
@@ -71,7 +71,7 @@ public class InfectionProgressCounter : MonoBehaviour
         _currentCount++;
         _currentCount++;
         _plusTwo.Play();
-        MoveProgressBar();
+        MoveProgressBar(2);
         CheckGameLosed();
         Invoke("StopParticleSystemSecond", 1f);
     }
@@ -95,9 +95,9 @@ public class InfectionProgressCounter : MonoBehaviour
         }
     }
 
-    private void MoveProgressBar()
+    private void MoveProgressBar(int count)
     {
-        _imageTransform.anchoredPosition = new Vector2(_imageTransform.anchoredPosition.x + _transformStep, _imageTransform.anchoredPosition.y);
+        _imageTransform.anchoredPosition = new Vector2(_imageTransform.anchoredPosition.x + (_transformStep * count), _imageTransform.anchoredPosition.y);
         _infectionProgress.text = _currentCount.ToString() + "/" + _infectionMax.ToString();
     }
 

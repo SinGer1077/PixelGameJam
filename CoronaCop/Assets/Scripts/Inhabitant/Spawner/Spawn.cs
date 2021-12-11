@@ -5,18 +5,19 @@ using UnityEngine.Serialization;
 
 public class Spawn : MonoBehaviour
 {
-    public Color carColor=Color.green;
-    public float spawnSpeed = 2; //Частота спавна машинок
+    private float spawnSpeed = 2f; //Частота проверки спавна
     private float acceleration; //Ускорение машинки
     private float maxSpeed; 
-    public bool accelerationRandomization = false; //Параметр, включающий рандомный элемент в скорости машинки
-    public bool spawnRandomization = false; //Параметр, включающий рандомный элемент в промежутках спавна машинок
-    public float infectedChance;
+    [FormerlySerializedAs("accelerationRandomization")] public bool speedRandomization = false; //Параметр, включающий рандомный элемент в скорости машинки
+    [SerializeField] private float infectedChance;
     [SerializeField] private float roadWidth;
     [SerializeField] private float speedVillagerToZone; //Предел максимальной скорости машинки
     [SerializeField] private float speedVillagerFromZone;
+    [SerializeField] private float chanceToSpawn;
+
+    private Color carColor; //Не удалять пока
     private float spawnTime;
-    public LevelCore levelCore;
+    private LevelCore levelCore;
     void Start()
     {
         maxSpeed = speedVillagerToZone;
@@ -30,16 +31,17 @@ public class Spawn : MonoBehaviour
     void Update()
     {
         //Таймер спавна
-        if (levelCore.getActiveLight() == carColor && levelCore.running)
+        if (levelCore.running)
         {
-            if (spawnTime <= 0)
+            if (spawnTime <= 0f)
             {
-                
-                createCar();
+                if (Random.Range(0, 1f) > (1f - chanceToSpawn))
+                {
+                    createCar();
+                    
+                }
                 spawnTime = spawnSpeed;
-                
-                if (spawnRandomization) {spawnTime+= Random.Range(0f, spawnSpeed / 2f);}
-                
+
             }
 
             if (spawnTime > 0) spawnTime -= Time.deltaTime;
@@ -65,7 +67,7 @@ public class Spawn : MonoBehaviour
         //if (accelerationRandomization) speed += Random.Range(-acceleration / 4, acceleration / 4);
         instance.GetComponent<Car>().setSpeed(speed);
         Car.SetSpeedVillagerFromZone(speedVillagerFromZone);
-        if (accelerationRandomization)
+        if (speedRandomization)
         {
             instance.GetComponent<Car>().SetMaxSpeed(maxSpeed + Random.Range(-maxSpeed * 0.15f,maxSpeed*0.15f));
         }

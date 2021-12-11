@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -12,9 +13,23 @@ public class LevelCore : MonoBehaviour
     public bool isLose = false;
     public bool isWin = false;
     public int winRate; //Количество машинок для выигрыша
+    private float timeToScanInhabitant = 1f;
+    private float timerToScan;
+
+    private void Start()
+    {
+        timerToScan = timeToScanInhabitant;
+    }
+
     void Update()
     {
         //Проверка на выигрыщ
+        timerToScan -= Time.deltaTime;
+        if (timerToScan <= 0)
+        {
+            timerToScan = timeToScanInhabitant;
+            
+        }
         var state1 = true;
         var i = 1;
         foreach (var element in statistic)

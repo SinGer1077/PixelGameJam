@@ -14,20 +14,27 @@ public class TimerMoving : MonoBehaviour
     [SerializeField]
     private GameObject _endGamePanel;
 
+    private bool _gameEnded;
+
     private void Start()
     {
         _slider.value = 1f;
         _currentTime = _timeToEndGame;
+        _gameEnded = false;
     }
 
     private void Update()
     {
-        if (_slider.value > 0)
+        if (!_gameEnded)
         {
-            _slider.value = (_currentTime - Time.time) / _timeToEndGame;
-            if (_slider.value <= 0)
+            if (_slider.value > 0)
             {
-                EndGame();
+                _currentTime -= Time.deltaTime;
+                _slider.value = _currentTime / _timeToEndGame;
+                if (_slider.value <= 0)
+                {
+                    EndGame();
+                }
             }
         }
     }
@@ -38,6 +45,7 @@ public class TimerMoving : MonoBehaviour
         Time.timeScale = 0;
         _slider.value = 1f;
         _currentTime = _timeToEndGame;
+        _gameEnded = true;
         _endGamePanel.SetActive(true);
     }
 }
