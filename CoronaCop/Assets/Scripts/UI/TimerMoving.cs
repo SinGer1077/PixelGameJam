@@ -11,6 +11,9 @@ public class TimerMoving : MonoBehaviour
     [SerializeField]
     private Slider _slider;
 
+    [SerializeField]
+    private GameObject _endGamePanel;
+
     private void Start()
     {
         _slider.value = 1f;
@@ -32,5 +35,7 @@ public class TimerMoving : MonoBehaviour
     public void EndGame()
     {
         Debug.Log("Конец");
+        Time.timeScale = 0;
+        _endGamePanel.SetActive(true);
     }
 }

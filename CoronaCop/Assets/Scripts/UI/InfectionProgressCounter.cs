@@ -21,6 +21,9 @@ public class InfectionProgressCounter : MonoBehaviour
     [SerializeField]
     private ParticleSystem _plusTwo;
 
+    [SerializeField]
+    private GameObject _endGamePanel;
+
     private int _currentCount = 0;
 
     private float _transformStep;
@@ -39,12 +42,12 @@ public class InfectionProgressCounter : MonoBehaviour
 
     private void Update()
     {
-        timer += Time.deltaTime;
-        if (timer > 2)
-        {
-            IncreaseCountTwo();
-            timer = 0;
-        }
+        //timer += Time.deltaTime;
+        //if (timer > 2)
+        //{
+        //    IncreaseCountTwo();
+        //    timer = 0;
+        //}
 
 
     }
@@ -86,7 +89,8 @@ public class InfectionProgressCounter : MonoBehaviour
     {
         if (_currentCount >= _infectionMax)
         {
-
+            Time.timeScale = 0;
+            _endGamePanel.SetActive(true);
         }
     }
 

@@ -132,6 +132,13 @@ public class Car : MonoBehaviour
             endPoint =other.transform.position + new Vector3(Random.Range(-spreadingRadius,spreadingRadius),0,Random.Range(-spreadingRadius,spreadingRadius));
             GetComponent<Rigidbody>().velocity = (endPoint - transform.position).normalized * vel;
             rotTarget=Quaternion.LookRotation (endPoint - gameObject.transform.position, Vector3.up);
+
+            var infected = GetComponentInChildren<InfectionState>().Infected;
+            if (infected)
+            {
+                var progressBar = FindObjectOfType<InfectionProgressCounter>();
+                progressBar.IncreaseCountOne();
+            }
         }
     }
 
