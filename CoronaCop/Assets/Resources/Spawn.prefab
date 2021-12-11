@@ -44,12 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb61a24150a16514095adb5c19e0f15c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  carColor: {r: 0, g: 1, b: 0, a: 1}
-  spawnSpeed: 5
-  maxSpeed: 300
-  accelerationRandomization: 0
-  spawnRandomization: 0
-  levelCore: {fileID: 0}
+  speedRandomization: 0
+  infectedChance: 0.25
+  roadWidth: 2
+  speedVillagerToZone: 4
+  speedVillagerFromZone: 8
+  chanceToSpawn: 0.1
 --- !u!114 &2341628560803823829
 MonoBehaviour:
   m_ObjectHideFlags: 0
