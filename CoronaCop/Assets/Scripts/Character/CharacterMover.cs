@@ -23,7 +23,14 @@ public class CharacterMover : MonoBehaviour
         _movementDirection = new Vector3(horizontal, 0, vertical);
         _movementDirection.Normalize();
 
-        transform.Translate(_movementDirection * _characterSpeed * Time.deltaTime, Space.World);
+        if (_movementDirection != Vector3.zero)
+        {
+            transform.Translate(_movementDirection * _characterSpeed * Time.deltaTime, Space.World);
+        }
+        else
+        {
+            GetComponent<Rigidbody>().velocity=Vector3.zero;
+        }
         if (horizontal != 0f || vertical != 0f)
         {
             

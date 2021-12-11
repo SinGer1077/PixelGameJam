@@ -1274,8 +1274,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7531638357290994605, guid: 4f9abbec442e6344b955d8885d686d8c,
         type: 3}
+      propertyPath: decreaseChance
+      value: 0.051
+      objectReference: {fileID: 0}
+    - target: {fileID: 7531638357290994605, guid: 4f9abbec442e6344b955d8885d686d8c,
+        type: 3}
       propertyPath: infectedChance
       value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7531638357290994605, guid: 4f9abbec442e6344b955d8885d686d8c,
+        type: 3}
+      propertyPath: numToChangeChance
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7531638357290994605, guid: 4f9abbec442e6344b955d8885d686d8c,
         type: 3}
@@ -1494,8 +1504,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7531638357290994605, guid: 4f9abbec442e6344b955d8885d686d8c,
         type: 3}
+      propertyPath: decreaseChance
+      value: 0.051
+      objectReference: {fileID: 0}
+    - target: {fileID: 7531638357290994605, guid: 4f9abbec442e6344b955d8885d686d8c,
+        type: 3}
       propertyPath: infectedChance
       value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7531638357290994605, guid: 4f9abbec442e6344b955d8885d686d8c,
+        type: 3}
+      propertyPath: numToChangeChance
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7531638357290994605, guid: 4f9abbec442e6344b955d8885d686d8c,
         type: 3}
@@ -1856,6 +1876,16 @@ PrefabInstance:
       propertyPath: chanceToSpawn
       value: 0.2
       objectReference: {fileID: 0}
+    - target: {fileID: 7531638357290994605, guid: 4f9abbec442e6344b955d8885d686d8c,
+        type: 3}
+      propertyPath: decreaseChance
+      value: 0.051
+      objectReference: {fileID: 0}
+    - target: {fileID: 7531638357290994605, guid: 4f9abbec442e6344b955d8885d686d8c,
+        type: 3}
+      propertyPath: numToChangeChance
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f9abbec442e6344b955d8885d686d8c, type: 3}
 --- !u!1001 &1536512540
@@ -2013,6 +2043,11 @@ PrefabInstance:
         type: 3}
       propertyPath: chanceToSpawn
       value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7531638357290994605, guid: 4f9abbec442e6344b955d8885d686d8c,
+        type: 3}
+      propertyPath: decreaseChance
+      value: 0.051
       objectReference: {fileID: 0}
     - target: {fileID: 7531638357290994605, guid: 4f9abbec442e6344b955d8885d686d8c,
         type: 3}
