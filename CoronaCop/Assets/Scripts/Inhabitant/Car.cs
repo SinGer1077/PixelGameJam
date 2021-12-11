@@ -113,7 +113,9 @@ public class Car : MonoBehaviour
                 ToPoint();
                 if (timerRunOut >= timeToRunningOut)
                 {
-                    manState = "Deleting";}
+                    manState = "Deleting";
+                    Destroy(this.gameObject);
+                }
             }
 
         }
