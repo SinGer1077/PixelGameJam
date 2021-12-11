@@ -27,7 +27,8 @@ public class Car : MonoBehaviour
     private float timerRunOut = 0;
     private float aTimer = 0;
     private bool arrivedToRecreation = false;
-    
+    private float speedVillagerToZone;
+    private float speedVillagerFromZone;
     
     void Start()
     {
@@ -99,7 +100,7 @@ public class Car : MonoBehaviour
                     GetComponent<BoxCollider>().enabled = false;
                     rb.constraints = RigidbodyConstraints.FreezePositionY;
                     aTimer = timeToRunningOut;
-                    maxSpeed*= 2f;
+                    maxSpeed=speedVillagerFromZone;
                     StartCoroutine(fadeInAndOut(gameObject, false, timeToRunningOut));
                 }
 
@@ -116,6 +117,10 @@ public class Car : MonoBehaviour
         }
     }
 
+    public void SetSpeedVillagerFromZone(float x)
+    {
+        speedVillagerFromZone = x;
+    }
     public void CopSayGoOut()
     {
         manState = "runningOut";
@@ -170,6 +175,7 @@ public class Car : MonoBehaviour
     public void SetMaxSpeed(float x)
     {
         maxSpeed = x;
+        speedVillagerToZone = x;
     }
 
     private GameObject FindEnemy()
