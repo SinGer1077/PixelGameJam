@@ -12,6 +12,7 @@ public class Spawn : MonoBehaviour
     public bool accelerationRandomization = false; //Параметр, включающий рандомный элемент в скорости машинки
     public bool spawnRandomization = false; //Параметр, включающий рандомный элемент в промежутках спавна машинок
     public float infectedChance;
+    [SerializeField] private float roadWidth;
 
     private float spawnTime;
     public LevelCore levelCore;
@@ -51,7 +52,7 @@ public class Spawn : MonoBehaviour
         instance.GetComponent<idScript>().setId(GetComponent<idScript>().getId());
         instance.GetComponent<MeshRenderer>().material.color = Color.yellow;
         instance.transform.position = transform.position;
-        instance.transform.position = new Vector3(instance.transform.position.x,instance.transform.position.y,instance.transform.position.z);
+        instance.transform.position = new Vector3(instance.transform.position.x+Random.Range(-roadWidth,roadWidth),instance.transform.position.y,instance.transform.position.z+Random.Range(-roadWidth,roadWidth));
         instance.transform.parent = transform.parent;
         if ((1f - Random.Range(0f, 1f)) < infectedChance)
         {

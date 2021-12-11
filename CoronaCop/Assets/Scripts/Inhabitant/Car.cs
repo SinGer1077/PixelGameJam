@@ -19,13 +19,16 @@ public class Car : MonoBehaviour
     private Rigidbody carBody;
     private string manState = "Created"; //Режим движения
     private float timeInZone = 4f;
-    private float spreadingRadius=10f;
+    private float spreadingRadius;
     private Vector3 endPoint;
     private Quaternion rotTarget;
     private Rigidbody rb;
     private float timeToRunningOut = 3f; //Время исчезновения
     private float timerRunOut = 0;
     private float aTimer = 0;
+    private bool arrivedToRecreation = false;
+    
+    
     void Start()
     {
         levelCore = GameObject.Find("Level").GetComponent<LevelCore>();
@@ -51,6 +54,7 @@ public class Car : MonoBehaviour
         {
             if (manState == "Created")
             {
+                spreadingRadius = enemy.GetComponent<Recreation>().GetRoadWidth();
                 endPoint = enemy.transform.position +
                            new Vector3(Random.Range(-spreadingRadius, spreadingRadius), 0, Random.Range(-spreadingRadius,
                                spreadingRadius));
@@ -60,16 +64,7 @@ public class Car : MonoBehaviour
             {
                 ToPoint();
                 transform.rotation=Quaternion.Lerp(transform.rotation, rotTarget, 0.08f);
-                
-            }
-
-            if (manState == "toEnemy" && (endPoint - transform.position).magnitude < spreadingRadius*2)
-            {
-                var vel = GetComponent<Rigidbody>().velocity.magnitude;
-                manState = "toPoint";
-                endPoint =enemy.transform.position + new Vector3(Random.Range(-spreadingRadius,spreadingRadius),0,Random.Range(-spreadingRadius,spreadingRadius));
-                GetComponent<Rigidbody>().velocity = (endPoint - transform.position).normalized * vel;
-                rotTarget=Quaternion.LookRotation (endPoint - gameObject.transform.position, Vector3.up);
+                //Проверка на заход в зону - при коллизии с триггером.
             }
 
             if (manState == "toPoint")
@@ -126,11 +121,17 @@ public class Car : MonoBehaviour
         manState = "runningOut";
         timerRunOut = 0;
     }
-    private void OnCollisionEnter(Collision other)
+    private void OnTriggerEnter (Collider other)
     {
-        if (other.gameObject.name == "Car(Clone)")
+        if (other.gameObject.tag == "Recreation" && !arrivedToRecreation)
         {
-            //levelCore.gameOver();
+            arrivedToRecreation = true;
+            var vel = GetComponent<Rigidbody>().velocity.magnitude;
+            manState = "toPoint";
+            spreadingRadius = other.transform.lossyScale.x/2f;
+            endPoint =other.transform.position + new Vector3(Random.Range(-spreadingRadius,spreadingRadius),0,Random.Range(-spreadingRadius,spreadingRadius));
+            GetComponent<Rigidbody>().velocity = (endPoint - transform.position).normalized * vel;
+            rotTarget=Quaternion.LookRotation (endPoint - gameObject.transform.position, Vector3.up);
         }
     }
 
@@ -173,10 +174,28 @@ public class Car : MonoBehaviour
 
     private GameObject FindEnemy()
     {
-        var points = GameObject.FindGameObjectsWithTag("EndPoint");
-        return points.First(point =>
-            point.GetComponent<idScript>().getId() == gameObject.GetComponent<idScript>().getId());
-       // return points.FirstOrDefault(point => point.GetComponent<MeshRenderer>().material.color == carColor);
+        var points = GameObject.FindGameObjectsWithTag("Recreation");
+        float minMagnitude = 0f;
+        GameObject target = null;
+        float currentDistance;
+        foreach (var point in points)
+        {
+            currentDistance = (transform.position - point.transform.position).magnitude;
+            if (target==null)
+            {
+                minMagnitude = currentDistance;
+                target = point;
+            }
+
+            if (minMagnitude > currentDistance)
+            {
+                target = point;
+                minMagnitude = currentDistance;
+            }
+            
+        }
+        Debug.Log("Рекреация найдена"+target);
+        return target;
     }
 
     private GameObject FindSpawn()
