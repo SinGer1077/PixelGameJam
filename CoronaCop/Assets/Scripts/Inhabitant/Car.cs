@@ -23,14 +23,17 @@ public class Car : MonoBehaviour
     private Vector3 endPoint;
     private Quaternion rotTarget;
     private Rigidbody rb;
-    private float timeToRunningOut = 3f; //Время исчезновения
+    private float timeToRunningOut = 4f; //Время исчезновения
     private float timerRunOut = 0;
     private float aTimer = 0;
     private bool arrivedToRecreation = false;
-    
+    private float speedVillagerToZone;
+    private float speedVillagerFromZone;
+    private Animator anim;
     
     void Start()
     {
+        anim = GetComponentInChildren<Animator>();
         levelCore = GameObject.Find("Level").GetComponent<LevelCore>();
         rb = GetComponent<Rigidbody>();
         carBody = gameObject.GetComponent<Rigidbody>();
@@ -41,7 +44,7 @@ public class Car : MonoBehaviour
             direction.y = 0;
             transform.rotation=Quaternion.LookRotation (enemy.transform.position - gameObject.transform.position, Vector3.up);
             rotTarget = transform.rotation;
-            gameObject.GetComponent<Renderer>().enabled = true;
+            //gameObject.GetComponent<Renderer>().enabled = true;
             
         }
 
@@ -54,6 +57,7 @@ public class Car : MonoBehaviour
         {
             if (manState == "Created")
             {
+                anim.SetTrigger("stay");
                 spreadingRadius = enemy.GetComponent<Recreation>().GetRoadWidth();
                 endPoint = enemy.transform.position +
                            new Vector3(Random.Range(-spreadingRadius, spreadingRadius), 0, Random.Range(-spreadingRadius,
@@ -63,24 +67,28 @@ public class Car : MonoBehaviour
             if (manState == "toEnemy")
             {
                 ToPoint();
+                anim.SetTrigger("walk");
                 transform.rotation=Quaternion.Lerp(transform.rotation, rotTarget, 0.08f);
                 //Проверка на заход в зону - при коллизии с триггером.
             }
 
             if (manState == "toPoint")
             {
+                anim.SetTrigger("walk");
                 transform.rotation=Quaternion.Lerp(transform.rotation, rotTarget, 0.08f);
                 ToPoint();
             }
 
             if (manState == "toPoint" && (endPoint - transform.position).magnitude < 5f)
             {
+                anim.SetTrigger("stay");
                 GetComponent<Rigidbody>().velocity = Vector3.zero;
                 manState = "waiting";
             }
 
             if (manState == "waiting")
             {
+                anim.SetTrigger("stay");
                 BrakingAfterCollision();
                 timeInZone -= Time.deltaTime;
                 if (timeInZone <= 0)
@@ -91,7 +99,7 @@ public class Car : MonoBehaviour
 
             if (manState == "runningOut")
             {
-
+                anim.SetTrigger("run");
                 if (timerRunOut == 0)
                 {
                     endPoint = FindSpawn().transform.position;
@@ -99,7 +107,7 @@ public class Car : MonoBehaviour
                     GetComponent<BoxCollider>().enabled = false;
                     rb.constraints = RigidbodyConstraints.FreezePositionY;
                     aTimer = timeToRunningOut;
-                    maxSpeed*= 2f;
+                    maxSpeed=speedVillagerFromZone;
                     StartCoroutine(fadeInAndOut(gameObject, false, timeToRunningOut));
                 }
 
@@ -116,6 +124,10 @@ public class Car : MonoBehaviour
         }
     }
 
+    public void SetSpeedVillagerFromZone(float x)
+    {
+        speedVillagerFromZone = x;
+    }
     public void CopSayGoOut()
     {
         manState = "runningOut";
@@ -132,6 +144,13 @@ public class Car : MonoBehaviour
             endPoint =other.transform.position + new Vector3(Random.Range(-spreadingRadius,spreadingRadius),0,Random.Range(-spreadingRadius,spreadingRadius));
             GetComponent<Rigidbody>().velocity = (endPoint - transform.position).normalized * vel;
             rotTarget=Quaternion.LookRotation (endPoint - gameObject.transform.position, Vector3.up);
+
+            var infected = GetComponentInChildren<InfectionState>().Infected;
+            if (infected)
+            {
+                var progressBar = FindObjectOfType<InfectionProgressCounter>();
+                progressBar.IncreaseCountOne();
+            }
         }
     }
 
@@ -170,6 +189,7 @@ public class Car : MonoBehaviour
     public void SetMaxSpeed(float x)
     {
         maxSpeed = x;
+        speedVillagerToZone = x;
     }
 
     private GameObject FindEnemy()
