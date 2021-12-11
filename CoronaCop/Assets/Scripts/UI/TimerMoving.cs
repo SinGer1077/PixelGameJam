@@ -36,6 +36,8 @@ public class TimerMoving : MonoBehaviour
     {
         Debug.Log("Конец");
         Time.timeScale = 0;
+        _slider.value = 1f;
+        _currentTime = _timeToEndGame;
         _endGamePanel.SetActive(true);
     }
 }

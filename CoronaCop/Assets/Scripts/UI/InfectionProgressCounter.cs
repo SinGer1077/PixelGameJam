@@ -89,6 +89,7 @@ public class InfectionProgressCounter : MonoBehaviour
     {
         if (_currentCount >= _infectionMax)
         {
+            _currentCount = 0;
             Time.timeScale = 0;
             _endGamePanel.SetActive(true);
         }
