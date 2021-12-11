@@ -57,6 +57,7 @@ public class QRCheck : MonoBehaviour
         {
             _timer = 0f;
             SetNeedToCheckFalse();
+            FindObjectOfType<CharacterMover>().IncreaseMultiplier();
 
             if (_infection.Infected)
             {

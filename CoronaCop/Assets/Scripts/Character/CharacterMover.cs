@@ -9,27 +9,45 @@ public class CharacterMover : MonoBehaviour
     public Vector3 _movementDirection;
     private Animator anim;
     private string state="stay";
+    private bool borderLand = false;
+    [SerializeField] private float speedMultiplier=1.2f;
+    [SerializeField] private float speedMultTimer = 2f;
+    [SerializeField] private int speedMultipleMax = 5;
+    public int currentSpeedMultiple;
+    private float timer = 0;
 
     private void Start()
     {
+        currentSpeedMultiple = 0;
         anim=GetComponentInChildren<Animator>();
     }
 
     private void Update()
     {
+        if (currentSpeedMultiple>=1) timer += Time.deltaTime;
+        if (timer >= speedMultTimer)
+        {
+            currentSpeedMultiple = 0;
+            timer = 0;
+        }
+        
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
         _movementDirection = new Vector3(horizontal, 0, vertical);
         _movementDirection.Normalize();
 
-        if (_movementDirection != Vector3.zero)
+        if (_movementDirection != Vector3.zero && !borderLand)
         {
-            transform.Translate(_movementDirection * _characterSpeed * Time.deltaTime, Space.World);
+            transform.Translate(_movementDirection * _characterSpeed * Time.deltaTime*(Mathf.Pow(speedMultiplier,currentSpeedMultiple)), Space.World);
         }
         else
         {
-            GetComponent<Rigidbody>().velocity=Vector3.zero;
+            if (borderLand)
+            {
+                transform.Translate(-_movementDirection * _characterSpeed*30 * Time.deltaTime, Space.World);
+                borderLand = false;
+            } else GetComponent<Rigidbody>().velocity=Vector3.zero;
         }
         if (horizontal != 0f || vertical != 0f)
         {
@@ -49,5 +67,25 @@ public class CharacterMover : MonoBehaviour
             anim.SetTrigger("stay"); //anim.SetBool("running", false);
             state = "stay";
         }
+    }
+
+    public void IncreaseMultiplier()
+    {
+        timer = 0;
+        currentSpeedMultiple++;
+        if (currentSpeedMultiple > speedMultipleMax)
+        {
+            currentSpeedMultiple = speedMultipleMax;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.name == "Border")
+        {
+            borderLand = true;
+
+
+        }
+        else borderLand = false;
     }
 }

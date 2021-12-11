@@ -64,7 +64,7 @@ public class Car : MonoBehaviour
                                spreadingRadius));
                 manState = "toEnemy";
             }
-            if (manState == "toEnemy")
+            if (manState == "toEnemy") //Движение до "базы"
             {
                 ToPoint();
                 anim.SetTrigger("walk");
