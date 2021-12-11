@@ -9,7 +9,12 @@ public class StartGame : MonoBehaviour
     private GameObject _menu;
 
     [SerializeField]
-    private GameObject[] __objectsToActivate;    
+    private GameObject[] __objectsToActivate;
+
+    private void Awake()
+    {
+        Screen.SetResolution(800, 800, false);
+    }
 
     public void GameStart()
     {
