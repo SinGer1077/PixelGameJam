@@ -5,7 +5,7 @@ using UnityEngine.Serialization;
 
 public class Spawn : MonoBehaviour
 {
-    private float spawnSpeed = 2f; //Частота проверки спавна
+    [SerializeField] private float timeToSpawn = 2f; //Частота проверки спавна
     private float acceleration; //Ускорение машинки
     private float maxSpeed; 
     [FormerlySerializedAs("accelerationRandomization")] public bool speedRandomization = false; //Параметр, включающий рандомный элемент в скорости машинки
@@ -14,6 +14,9 @@ public class Spawn : MonoBehaviour
     [SerializeField] private float speedVillagerToZone; //Предел максимальной скорости машинки
     [SerializeField] private float speedVillagerFromZone;
     [SerializeField] private float chanceToSpawn;
+    [SerializeField] private int numToChangeChance = 10;
+    [SerializeField] private float decreaseChance = 0.05f;
+    private float currentDecreaseChance = 0f;
 
     private Color carColor; //Не удалять пока
     private float spawnTime;
@@ -35,12 +38,18 @@ public class Spawn : MonoBehaviour
         {
             if (spawnTime <= 0f)
             {
-                if (Random.Range(0, 1f) > (1f - chanceToSpawn))
+                if (levelCore.getTotalVisitors() >= numToChangeChance)
+                {
+                    currentDecreaseChance = decreaseChance;
+                    if (decreaseChance > chanceToSpawn) currentDecreaseChance = chanceToSpawn;
+                }
+                else currentDecreaseChance = 0f;
+                if (Random.Range(0, 1f) > (1f - chanceToSpawn+currentDecreaseChance))
                 {
                     createCar();
                     
                 }
-                spawnTime = spawnSpeed;
+                spawnTime = timeToSpawn;
 
             }
 

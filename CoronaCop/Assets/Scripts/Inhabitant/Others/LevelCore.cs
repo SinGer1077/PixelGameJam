@@ -13,12 +13,14 @@ public class LevelCore : MonoBehaviour
     public bool isLose = false;
     public bool isWin = false;
     public int winRate; //Количество машинок для выигрыша
-    private float timeToScanInhabitant = 1f;
+    private float timeToScanInhabitant = 2f;
     private float timerToScan;
+    private int totalVisitorsCount;
 
     private void Start()
     {
         timerToScan = timeToScanInhabitant;
+        totalVisitorsCount=ScanInhabitant();
     }
 
     void Update()
@@ -44,6 +46,18 @@ public class LevelCore : MonoBehaviour
         {
             isWin = true;
         }
+    }
+
+    private int ScanInhabitant()
+    {
+        var objects = FindObjectsOfType<Car>();
+        
+        return objects.Length;
+    }
+
+    public int getTotalVisitors()
+    {
+        return totalVisitorsCount;
     }
     public class Colors    //Класс данных о спавнах, цветах машин и т.д. со ссылками на обьекты
     
