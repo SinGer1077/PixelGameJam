@@ -20,6 +20,15 @@ public class QRCheck : MonoBehaviour
     [SerializeField]
     private SpriteRenderer _background;
 
+    [SerializeField]
+    private Sprite _negativeResultSprite;
+
+    [SerializeField]
+    private Sprite _default;
+
+    [SerializeField]
+    private Sprite _positiveResultSprite;
+
     private float _timer = 0f;
 
     private float _updateCheckTimer = 0f;
@@ -52,12 +61,15 @@ public class QRCheck : MonoBehaviour
             if (_infection.Infected)
             {
                 GetComponentInParent<Car>().CopSayGoOut(); //Гоним его в шею
+                _renderer.sprite = _positiveResultSprite;
                 Debug.Log("Чертила заражён, ломай его");
             }
             else
             {
+                _renderer.sprite = _negativeResultSprite;
                 Debug.Log("Чертила чист, отпускаем");
             }
+            Invoke("ResetToDefaulImage", 0.8f);
         }
 
         if (!_needToCheck)
@@ -82,18 +94,22 @@ public class QRCheck : MonoBehaviour
 
     public void StopCheckQR()
     {
-        _isReadyToCheck = false;
+        if (_needToCheck == true)
+        {
+            _isReadyToCheck = false;
 
-        _background.gameObject.SetActive(false);
-        _renderer.gameObject.SetActive(false);
+            _background.gameObject.SetActive(false);
+            _renderer.gameObject.SetActive(false);
 
-        _renderer.gameObject.transform.localScale = Vector3.one;
+            _renderer.gameObject.transform.localScale = Vector3.one;
+        }
     }
 
     public void SetNeedToCheckTrue()
     {        
         _needToCheck = true;
         _updateCheckTimer = 0f;
+        _renderer.sprite = _default;
         //_renderer.color = Color.yellow;
     }  
     
@@ -102,5 +118,13 @@ public class QRCheck : MonoBehaviour
         _needToCheck = false;
         _updateCheckTimer = 0f;
         //_renderer.color = Color.green;
+    }
+
+    private void ResetToDefaulImage()
+    {
+        _background.gameObject.SetActive(false);
+        _renderer.gameObject.SetActive(false);
+        _renderer.sprite = _default;
+        _renderer.gameObject.transform.localScale = Vector3.one;
     }
 }
