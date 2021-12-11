@@ -15,6 +15,9 @@ public class InfectionProgressCounter : MonoBehaviour
     [SerializeField]
     private RectTransform _parentWidth;
 
+    [SerializeField]
+    private ParticleSystem _system;
+
     private int _currentCount = 0;
 
     private float _transformStep;
@@ -49,13 +52,23 @@ public class InfectionProgressCounter : MonoBehaviour
     public void IncreaseCount()
     {
         _currentCount++;
+        _system.Play();
         MoveProgressBar();
         CheckGameLosed();
+        Invoke("StopParticleSystem", 1f);
+    }
+
+    private void StopParticleSystem()
+    {
+        _system.Stop();
     }
 
     private void CheckGameLosed()
     {
+        if (_currentCount >= _infectionMax)
+        {
 
+        }
     }
 
     private void MoveProgressBar()
