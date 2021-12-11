@@ -16,7 +16,10 @@ public class InfectionProgressCounter : MonoBehaviour
     private RectTransform _parentWidth;
 
     [SerializeField]
-    private ParticleSystem _system;
+    private ParticleSystem _plusOne;
+
+    [SerializeField]
+    private ParticleSystem _plusTwo;
 
     private int _currentCount = 0;
 
@@ -39,9 +42,11 @@ public class InfectionProgressCounter : MonoBehaviour
         timer += Time.deltaTime;
         if (timer > 2)
         {
-            IncreaseCount();
+            IncreaseCountTwo();
             timer = 0;
         }
+
+
     }
 
     public void SetInfectionMax(int value)
@@ -49,18 +54,32 @@ public class InfectionProgressCounter : MonoBehaviour
         _infectionMax = value;
     }
 
-    public void IncreaseCount()
+    public void IncreaseCountOne()
     {
         _currentCount++;
-        _system.Play();
+        _plusOne.Play();
         MoveProgressBar();
         CheckGameLosed();
-        Invoke("StopParticleSystem", 1f);
+        Invoke("StopParticleSystemFirst", 1f);
     }
 
-    private void StopParticleSystem()
+    public void IncreaseCountTwo()
     {
-        _system.Stop();
+        _currentCount++;
+        _currentCount++;
+        _plusTwo.Play();
+        MoveProgressBar();
+        CheckGameLosed();
+        Invoke("StopParticleSystemSecond", 1f);
+    }
+
+    private void StopParticleSystemFirst()
+    {
+        _plusOne.Stop();
+    }
+    private void StopParticleSystemSecond()
+    {
+        _plusTwo.Stop();
     }
 
     private void CheckGameLosed()
@@ -80,6 +99,9 @@ public class InfectionProgressCounter : MonoBehaviour
     private void ResetToDefault()
     {
         _infectionProgress.text = _currentCount.ToString()+ "/" + _infectionMax.ToString();
-        _imageTransform = _defaultTransform;        
+        _imageTransform = _defaultTransform;
+
+        _plusOne.Stop();
+        _plusTwo.Stop();
     }
 }
