@@ -8,10 +8,18 @@ public class StartGame : MonoBehaviour
     [SerializeField]
     private GameObject _menu;
 
+    [SerializeField]
+    private GameObject[] __objectsToActivate;    
+
     public void GameStart()
     {
         Time.timeScale = 1;
         _menu.SetActive(false);
+
+        foreach(GameObject obj in __objectsToActivate)
+        {
+            obj.SetActive(true);
+        }
     }
 
     public void ReloadScene()
