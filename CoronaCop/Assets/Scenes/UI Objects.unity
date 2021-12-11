@@ -511,7 +511,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 60, y: 0}
   m_SizeDelta: {x: 500, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &335520057
@@ -564,7 +564,7 @@ GameObject:
   - component: {fileID: 362168323}
   - component: {fileID: 362168322}
   m_Layer: 5
-  m_Name: Text
+  m_Name: InfectionProgressText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -877,6 +877,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1079419793}
+  - component: {fileID: 1079419794}
   m_Layer: 5
   m_Name: TimerScroll
   m_TagString: Untagged
@@ -904,6 +905,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1079419794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1079419792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebd5ace412e76c44b9d4f5d793cbf50b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _timeToEndGame: 10
+  _slider: {fileID: 1987691934}
 --- !u!1 &1137809575
 GameObject:
   m_ObjectHideFlags: 0
@@ -939,7 +954,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 505, y: 30}
+  m_SizeDelta: {x: 465, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1137809577
 MonoBehaviour:
@@ -1177,6 +1192,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1879725698}
+  - component: {fileID: 1879725699}
   m_Layer: 5
   m_Name: InfectionScroll
   m_TagString: Untagged
@@ -1206,6 +1222,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1879725699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1879725697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b0806a93fcfb7641aeac81c381ebf1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _imageTransform: {fileID: 335520056}
+  _infectionProgress: {fileID: 362168322}
+  _infectionMax: 10
+  _parentWidth: {fileID: 792534244}
 --- !u!1 &1987691932
 GameObject:
   m_ObjectHideFlags: 0
@@ -1242,8 +1274,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -45}
-  m_SizeDelta: {x: 500, y: 50}
+  m_AnchoredPosition: {x: 20, y: -45}
+  m_SizeDelta: {x: 460, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1987691934
 MonoBehaviour:
