@@ -23,7 +23,7 @@ public class StartGame : MonoBehaviour
     private void Start()
     {
         core = FindObjectOfType<LevelCore>();
-        core.running = false;
+        core.running = false;   
     }
 
     public void GameStart()
