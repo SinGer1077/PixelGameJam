@@ -17,6 +17,7 @@ public class Car : MonoBehaviour
     private LevelCore levelCore;
     private float maxSpeed;
     private Rigidbody carBody;
+    [SerializeField]
     private string manState = "Created"; //Режим движения
     private float timeInZone = 4f;
     private float spreadingRadius;
@@ -79,7 +80,8 @@ public class Car : MonoBehaviour
                 ToPoint();
             }
 
-            if (manState == "toPoint" && (endPoint - transform.position).magnitude < 5f)
+            var transform1 = transform.position - transform.position.y * (Vector3.up);
+            if (manState == "toPoint" && (endPoint - transform1).magnitude < 4f)
             {
                 anim.SetTrigger("stay");
                 GetComponent<Rigidbody>().velocity = Vector3.zero;
@@ -140,7 +142,7 @@ public class Car : MonoBehaviour
             arrivedToRecreation = true;
             var vel = GetComponent<Rigidbody>().velocity.magnitude;
             manState = "toPoint";
-            spreadingRadius = other.transform.lossyScale.x/2f;
+            spreadingRadius = other.transform.lossyScale.x/2.8f;
             endPoint =other.transform.position + new Vector3(Random.Range(-spreadingRadius,spreadingRadius),0,Random.Range(-spreadingRadius,spreadingRadius));
             GetComponent<Rigidbody>().velocity = (endPoint - transform.position).normalized * vel;
             rotTarget=Quaternion.LookRotation (endPoint - gameObject.transform.position, Vector3.up);
