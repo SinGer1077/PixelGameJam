@@ -6,6 +6,9 @@ public class CharacterMover : MonoBehaviour
     [SerializeField]
     private float _characterSpeed;
 
+    [SerializeField]
+    private ParticleSystem _runSystem;    
+
     public Vector3 _movementDirection;
     private Animator anim;
     private string state="stay";
@@ -26,10 +29,14 @@ public class CharacterMover : MonoBehaviour
         if (_movementDirection != Vector3.zero)
         {
             transform.Translate(_movementDirection * _characterSpeed * Time.deltaTime, Space.World);
+            _runSystem.Play();
+            _runSystem.gameObject.SetActive(true);
         }
         else
         {
             GetComponent<Rigidbody>().velocity=Vector3.zero;
+            StopAnimate();
+
         }
         if (horizontal != 0f || vertical != 0f)
         {
@@ -43,11 +50,17 @@ public class CharacterMover : MonoBehaviour
                 //anim.SetBool("running",true);
         } else {
             if (state == "run")
-            {
+            {                
                 //anim.SetBool("running",false);
             }
             anim.SetTrigger("stay"); //anim.SetBool("running", false);
-            state = "stay";
+            state = "stay";            
         }
+    }
+
+    private void StopAnimate()
+    {
+        _runSystem.Pause();
+        _runSystem.gameObject.SetActive(false);
     }
 }
