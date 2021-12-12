@@ -17,8 +17,8 @@ public class Car : MonoBehaviour
     private LevelCore levelCore;
     private float maxSpeed;
     private Rigidbody carBody;
-    private string manState = "Created"; //Режим движения
-    private float timeInZone = 4f;
+    public string manState = "Created"; //Режим движения
+    private float timeInZone = 6f;
     private float spreadingRadius;
     private Vector3 endPoint;
     private Quaternion rotTarget;
@@ -236,6 +236,7 @@ public class Car : MonoBehaviour
 
     private void BrakingAfterCollision()
     {
+        return;
         if (rb.velocity.magnitude > 10 && rb.velocity.magnitude != 0f)
         {
             rb.velocity /= 1.5f;

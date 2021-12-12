@@ -128,6 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccecc71770f927746826985f76601eff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  manState: Created
 --- !u!65 &-268948486855325706
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -396,7 +397,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 23e7f8e5c5e8da847b8a3d8eeb85cd26,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.376
+      value: -0.51
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 23e7f8e5c5e8da847b8a3d8eeb85cd26,
         type: 3}

@@ -28,9 +28,9 @@ public class InfectionState : MonoBehaviour
     private bool _readyToInfect = false;
 
     private float _timer = 0f;
-    private ParticleSystem em;
-    private float timerEm = 4;
-    private ParticleSystem.EmissionModule emEn;
+    //private ParticleSystem em;
+    private float timerEm = 4; 
+    //private ParticleSystem.EmissionModule emEn;
     private void Start()
     {
         if (_infected)
@@ -38,8 +38,8 @@ public class InfectionState : MonoBehaviour
             SetInfection();
         }
 
-        em = GetComponentInChildren<ParticleSystem>();
-        emEn = em.emission;
+        //em = GetComponentInChildren<ParticleSystem>();
+        //emEn = em.emission;
     }
 
     public void SetInfection()
@@ -48,7 +48,7 @@ public class InfectionState : MonoBehaviour
         _infected = true;
         gameObject.AddComponent<DetectAndInfectInhabitant>();
         _renderer.material = _infectedMaterial;
-        emEn.enabled = true;
+       // emEn.enabled = true;
         timerEm = 3;
 
     }
@@ -60,11 +60,11 @@ public class InfectionState : MonoBehaviour
 
     private void Update()
     {
-        if (emEn.enabled==true) timerEm -= Time.deltaTime;
+        //if (emEn.enabled==true) timerEm -= Time.deltaTime;
         if (timerEm <= 0 )
         {
-            var emEn = em.emission;
-            emEn.enabled = false;
+            //var emEn = em.emission;
+            //emEn.enabled = false;
         }
         if (_readyToInfect && !_infected)
         {
