@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class InfectionState : MonoBehaviour
 {
@@ -21,6 +22,9 @@ public class InfectionState : MonoBehaviour
     [SerializeField]
     private Material _infectedMaterial;
 
+    [SerializeField]
+    private AudioSource _audio;
+
     private bool _readyToInfect = false;
 
     private float _timer = 0f;
@@ -38,7 +42,7 @@ public class InfectionState : MonoBehaviour
         _readyToInfect = false;
         _infected = true;
         gameObject.AddComponent<DetectAndInfectInhabitant>();
-        _renderer.material = _infectedMaterial;        
+        _renderer.material = _infectedMaterial;       
     }
 
     public void SetInfectionZoneRadius(float radius)
@@ -55,6 +59,7 @@ public class InfectionState : MonoBehaviour
             if (_timer >= _timeToInfect)
             {
                 SetInfection();
+                _audio.Play();
                 var progressBar = FindObjectOfType<InfectionProgressCounter>();
                 progressBar.IncreaseCountTwo();
             }
