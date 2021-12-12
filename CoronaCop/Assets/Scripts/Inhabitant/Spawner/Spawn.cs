@@ -23,6 +23,7 @@ public class Spawn : MonoBehaviour
     private LevelCore levelCore;
     void Start()
     {
+        GetComponent<MeshRenderer>().enabled = false;
         maxSpeed = speedVillagerToZone;
         acceleration = maxSpeed+15f;
         setColor(gameObject.GetComponentInParent<UnitedObject>().getColor());

@@ -38,11 +38,15 @@ public class QRCheck : MonoBehaviour
     private bool _needToCheck = true;
 
     public bool NeedToCheck => _needToCheck;
+    private CharacterMover playerMover;
+    [SerializeField] private float bonusMultiplier=1.1f;
 
     private void Start()
     {
         SetNeedToCheckTrue();
         _renderer.gameObject.SetActive(false);
+        playerMover = FindObjectOfType<CharacterMover>();
+
     }
 
     private void FixedUpdate()
@@ -53,7 +57,7 @@ public class QRCheck : MonoBehaviour
             _renderer.gameObject.transform.localScale = Vector3.Lerp(Vector3.one, new Vector3(25, 25, 1), _timer/_timeToCheck);
         }
 
-        if (_timer >= _timeToCheck)
+        if (_timer >= _timeToCheck/Mathf.Pow(bonusMultiplier,playerMover.GetMultiplier()))
         {
             _timer = 0f;
             SetNeedToCheckFalse();

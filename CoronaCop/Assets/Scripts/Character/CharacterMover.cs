@@ -11,8 +11,8 @@ public class CharacterMover : MonoBehaviour
     private string state="stay";
     private bool borderLand = false;
     [SerializeField] private float speedMultiplier=1.2f;
-    [SerializeField] private float speedMultTimer = 2f;
-    [SerializeField] private int speedMultipleMax = 5;
+    [SerializeField] private float speedMultTimer = 2.5f;
+    [SerializeField] private int speedMultipleMax = 4;
     public int currentSpeedMultiple;
     private float timer = 0;
 
@@ -69,6 +69,10 @@ public class CharacterMover : MonoBehaviour
         }
     }
 
+    public int GetMultiplier()
+    {
+        return currentSpeedMultiple;
+    }
     public void IncreaseMultiplier()
     {
         timer = 0;
