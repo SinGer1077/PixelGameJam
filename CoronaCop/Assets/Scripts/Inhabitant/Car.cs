@@ -140,7 +140,7 @@ public class Car : MonoBehaviour
             arrivedToRecreation = true;
             var vel = GetComponent<Rigidbody>().velocity.magnitude;
             manState = "toPoint";
-            spreadingRadius = other.transform.lossyScale.x/2f;
+            spreadingRadius = other.transform.lossyScale.x/3f;
             endPoint =other.transform.position + new Vector3(Random.Range(-spreadingRadius,spreadingRadius),0,Random.Range(-spreadingRadius,spreadingRadius));
             GetComponent<Rigidbody>().velocity = (endPoint - transform.position).normalized * vel;
             rotTarget=Quaternion.LookRotation (endPoint - gameObject.transform.position, Vector3.up);

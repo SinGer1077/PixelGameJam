@@ -12,6 +12,7 @@ public class CharacterMover : MonoBehaviour
     public Vector3 _movementDirection;
     private Animator anim;
     private string state="stay";
+    private bool borderBrake = false;
 
     private void Start()
     {
@@ -28,7 +29,16 @@ public class CharacterMover : MonoBehaviour
 
         if (_movementDirection != Vector3.zero)
         {
-            transform.Translate(_movementDirection * _characterSpeed * Time.deltaTime, Space.World);
+            if (!borderBrake)
+            {
+                transform.Translate(_movementDirection * _characterSpeed * Time.deltaTime, Space.World);
+            }
+            else
+            {
+                transform.Translate(-_movementDirection * _characterSpeed *40f* Time.deltaTime, Space.World);
+                borderBrake = false;
+            } 
+            
             _runSystem.Play();
             _runSystem.gameObject.SetActive(true);
         }
@@ -36,7 +46,6 @@ public class CharacterMover : MonoBehaviour
         {
             GetComponent<Rigidbody>().velocity=Vector3.zero;
             StopAnimate();
-
         }
         if (horizontal != 0f || vertical != 0f)
         {
@@ -62,5 +71,17 @@ public class CharacterMover : MonoBehaviour
     {
         _runSystem.Pause();
         _runSystem.gameObject.SetActive(false);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.name == "Border")
+        {
+            borderBrake = true;
+        }
+        else
+        {
+            borderBrake = false;
+        }
     }
 }
