@@ -13,7 +13,11 @@ public class CharacterMover : MonoBehaviour
     private Animator anim;
     private string state="stay";
     private bool borderBrake = false;
-
+    [SerializeField] private float speedMultiplier=1.2f;
+    [SerializeField] private float speedMultTimer = 2.5f;
+    [SerializeField] private int speedMultipleMax = 4;
+    public int currentSpeedMultiple;
+    private float timer = 0;
     private void Start()
     {
         anim=GetComponentInChildren<Animator>();
@@ -21,6 +25,12 @@ public class CharacterMover : MonoBehaviour
 
     private void Update()
     {
+        if (currentSpeedMultiple>=1) timer += Time.deltaTime;
+        if (timer >= speedMultTimer)
+        {
+            currentSpeedMultiple = 0;
+            timer = 0;
+        }
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
@@ -66,7 +76,19 @@ public class CharacterMover : MonoBehaviour
             state = "stay";            
         }
     }
-
+    public int GetMultiplier()
+    {
+        return currentSpeedMultiple;
+    }
+    public void IncreaseMultiplier()
+    {
+        timer = 0;
+        currentSpeedMultiple++;
+        if (currentSpeedMultiple > speedMultipleMax)
+        {
+            currentSpeedMultiple = speedMultipleMax;
+        }
+    }
     private void StopAnimate()
     {
         _runSystem.Pause();
