@@ -1629,7 +1629,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -110, y: -41.119995}
+  m_AnchoredPosition: {x: -63.5, y: -60.4}
   m_SizeDelta: {x: 203.3, y: 52}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1056595675
@@ -1830,6 +1830,7 @@ GameObject:
   - component: {fileID: 1148237339}
   - component: {fileID: 1148237338}
   - component: {fileID: 1148237337}
+  - component: {fileID: 1148237341}
   m_Layer: 5
   m_Name: X-multiplier
   m_TagString: Untagged
@@ -1918,6 +1919,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1148237341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1148237336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87d29603d0350a74484cfb67b5f40222, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1181330592
 GameObject:
   m_ObjectHideFlags: 0

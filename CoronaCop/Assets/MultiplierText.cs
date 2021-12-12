@@ -18,4 +18,10 @@ public class MultiplierText : MonoBehaviour
         /*if (playerMover.i)
         GetComponent<Text>().text=*/
     }
+
+    public void CheckMultiplierToCanvas()
+    {
+        var x=playerMover.GetMultiplier();
+        gameObject.GetComponentInChildren<Text>().text = "Boost: X" + x;
+    }
 }

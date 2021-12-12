@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharacterMover : MonoBehaviour
 {
@@ -18,9 +19,11 @@ public class CharacterMover : MonoBehaviour
     [SerializeField] private int speedMultipleMax = 4;
     public int currentSpeedMultiple;
     private float timer = 0;
+    private MultiplierText texter;
     private void Start()
     {
         anim=GetComponentInChildren<Animator>();
+        texter = FindObjectOfType<MultiplierText>();
     }
 
     private void Update()
@@ -29,6 +32,7 @@ public class CharacterMover : MonoBehaviour
         if (timer >= speedMultTimer)
         {
             currentSpeedMultiple = 0;
+            texter.CheckMultiplierToCanvas();
             timer = 0;
         }
         float horizontal = Input.GetAxis("Horizontal");
@@ -88,6 +92,8 @@ public class CharacterMover : MonoBehaviour
         {
             currentSpeedMultiple = speedMultipleMax;
         }
+
+        texter.CheckMultiplierToCanvas();
     }
     private void StopAnimate()
     {

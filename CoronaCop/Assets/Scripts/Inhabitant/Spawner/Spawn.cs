@@ -27,6 +27,7 @@ public class Spawn : MonoBehaviour
         acceleration = maxSpeed+15f;
         setColor(gameObject.GetComponentInParent<UnitedObject>().getColor());
         levelCore=GameObject.Find("Level").GetComponent<LevelCore>();
+        GetComponent<MeshRenderer>().enabled = false;
         spawnTime =0;
     }
 
