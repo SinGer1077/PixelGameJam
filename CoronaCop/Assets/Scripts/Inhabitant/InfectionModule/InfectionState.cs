@@ -29,7 +29,7 @@ public class InfectionState : MonoBehaviour
 
     private float _timer = 0f;
     //private ParticleSystem em;
-    private float timerEm = 4; 
+    private float timerEm = 4; //Таймер эмиссии частичек чиха
     //private ParticleSystem.EmissionModule emEn;
     private void Start()
     {

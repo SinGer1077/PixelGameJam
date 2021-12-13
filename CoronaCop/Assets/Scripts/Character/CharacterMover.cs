@@ -15,8 +15,8 @@ public class CharacterMover : MonoBehaviour
     private string state="stay";
     private bool borderBrake = false;
     [SerializeField] private float speedMultiplier=1.2f;
-    [SerializeField] private float speedMultTimer = 2.5f;
-    [SerializeField] private int speedMultipleMax = 4;
+    [SerializeField] private float speedMultTimer;
+    [SerializeField] private int speedMultipleMax;
     public int currentSpeedMultiple;
     private float timer = 0;
     private MultiplierText texter;
@@ -32,8 +32,9 @@ public class CharacterMover : MonoBehaviour
         if (timer >= speedMultTimer)
         {
             currentSpeedMultiple = 0;
-            texter.CheckMultiplierToCanvas();
             timer = 0;
+            texter.CheckMultiplierToCanvas();
+            
         }
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
@@ -45,7 +46,7 @@ public class CharacterMover : MonoBehaviour
         {
             if (!borderBrake)
             {
-                transform.Translate(_movementDirection * _characterSpeed * Time.deltaTime, Space.World);
+                transform.Translate(_movementDirection * _characterSpeed*Mathf.Pow(speedMultiplier,currentSpeedMultiple) * Time.deltaTime, Space.World);
             }
             else
             {
@@ -87,11 +88,11 @@ public class CharacterMover : MonoBehaviour
     public void IncreaseMultiplier()
     {
         timer = 0;
-        currentSpeedMultiple++;
-        if (currentSpeedMultiple > speedMultipleMax)
+        
+        if (currentSpeedMultiple >= speedMultipleMax)
         {
             currentSpeedMultiple = speedMultipleMax;
-        }
+        } else currentSpeedMultiple+=1;
 
         texter.CheckMultiplierToCanvas();
     }

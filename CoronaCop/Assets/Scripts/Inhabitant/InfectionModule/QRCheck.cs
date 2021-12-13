@@ -40,27 +40,32 @@ public class QRCheck : MonoBehaviour
     public bool NeedToCheck => _needToCheck;
     private CharacterMover playerMover;
     [SerializeField] private float bonusMultiplier=1.1f;
+    private float summaryTimeToCheck;
+    private CharacterMover charMover;
     private void Start()
     {
+        
         SetNeedToCheckTrue();
         _renderer.gameObject.SetActive(false);
         playerMover = FindObjectOfType<CharacterMover>();
+        charMover = FindObjectOfType<CharacterMover>();
     }
 
     private void FixedUpdate()
     {
+        summaryTimeToCheck = _timeToCheck / Mathf.Pow(bonusMultiplier, playerMover.GetMultiplier());
         if (_isReadyToCheck && _needToCheck)
         {
             _timer += Time.deltaTime;
-            _renderer.gameObject.transform.localScale = Vector3.Lerp(Vector3.one, new Vector3(25, 25, 1), _timer/_timeToCheck);
+            _renderer.gameObject.transform.localScale = Vector3.Lerp(Vector3.one, new Vector3(25, 25, 1), _timer/summaryTimeToCheck);
             
         }
 
-        if (_timer >= _timeToCheck/Mathf.Pow(bonusMultiplier,playerMover.GetMultiplier()))
+        if (_timer >= summaryTimeToCheck)
         {
             _timer = 0f;
             SetNeedToCheckFalse();
-            FindObjectOfType<CharacterMover>().IncreaseMultiplier();
+            charMover.IncreaseMultiplier();
             if (_infection.Infected)
             {
                 GetComponentInParent<Car>().CopSayGoOut(); //Гоним его в шею
