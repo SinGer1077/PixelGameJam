@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,11 +29,17 @@ public class InfectionState : MonoBehaviour
     private bool _readyToInfect = false;
 
     private float _timer = 0f;
+
+    private bool inParkState = false;
     //private ParticleSystem em;
     private float timerEm = 4; //Таймер эмиссии частичек чиха
+
+    private ParticleSystem particles;
     //private ParticleSystem.EmissionModule emEn;
     private void Start()
     {
+        particles = GetComponentInChildren<ParticleSystem>();
+        particles.GetComponent<Renderer>().enabled = false;
         if (_infected)
         {
             SetInfection();
@@ -74,8 +81,15 @@ public class InfectionState : MonoBehaviour
             {
                 SetInfection();
                 _audio.Play();
+                
+                particles.GetComponent<Renderer>().enabled = true;
+                particles.Play();
                 var progressBar = FindObjectOfType<InfectionProgressCounter>();
-                progressBar.IncreaseCountOne();
+                if (inParkState)
+                {
+                    progressBar.IncreaseCountOne();
+                }
+                
             }
         }
     }
@@ -88,5 +102,15 @@ public class InfectionState : MonoBehaviour
     public void StopInfection()
     {
         _readyToInfect = false;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        inParkState = true;
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        inParkState = false;
     }
 }

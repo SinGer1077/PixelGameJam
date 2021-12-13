@@ -18,7 +18,7 @@ public class Car : MonoBehaviour
     private float maxSpeed;
     private Rigidbody carBody;
     public string manState = "Created"; //Режим движения
-    private float timeInZone = 6f;
+    public float timeInZone = 14f;
     private float spreadingRadius;
     private Vector3 endPoint;
     private Quaternion rotTarget;
@@ -30,6 +30,7 @@ public class Car : MonoBehaviour
     private float speedVillagerToZone;
     private float speedVillagerFromZone;
     private Animator anim;
+    private Vector3 currentPos2d;
     
     void Start()
     {
@@ -38,6 +39,7 @@ public class Car : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         carBody = gameObject.GetComponent<Rigidbody>();
         enemy = FindEnemy(); //Поиск направления движения
+        timeInZone = timeInZone + Random.Range(-timeInZone / 2, timeInZone / 2);
         if (enemy!=null) {
             
             var direction = enemy.transform.position - gameObject.transform.position;
@@ -79,7 +81,9 @@ public class Car : MonoBehaviour
                 ToPoint();
             }
 
-            if (manState == "toPoint" && (endPoint - transform.position).magnitude < 5f)
+            currentPos2d = transform.position;
+            currentPos2d.y = 0;
+            if (manState == "toPoint" && (endPoint - currentPos2d).magnitude < 5f)
             {
                 anim.SetTrigger("stay");
                 GetComponent<Rigidbody>().velocity = Vector3.zero;
@@ -103,6 +107,7 @@ public class Car : MonoBehaviour
                 if (timerRunOut == 0)
                 {
                     endPoint = FindSpawn().transform.position;
+                    
                     rotTarget=Quaternion.LookRotation (endPoint - gameObject.transform.position, Vector3.up);
                     GetComponent<BoxCollider>().enabled = false;
                     rb.constraints = RigidbodyConstraints.FreezePositionY;
@@ -141,6 +146,8 @@ public class Car : MonoBehaviour
             var vel = GetComponent<Rigidbody>().velocity.magnitude;
             manState = "toPoint";
             spreadingRadius = other.transform.lossyScale.x/3f;
+            endPoint = other.transform.position;
+            endPoint.y = 0;
             endPoint =other.transform.position + new Vector3(Random.Range(-spreadingRadius,spreadingRadius),0,Random.Range(-spreadingRadius,spreadingRadius));
             GetComponent<Rigidbody>().velocity = (endPoint - transform.position).normalized * vel;
             rotTarget=Quaternion.LookRotation (endPoint - gameObject.transform.position, Vector3.up);
@@ -148,8 +155,8 @@ public class Car : MonoBehaviour
             var infected = GetComponentInChildren<InfectionState>().Infected;
             if (infected)
             {
-                var progressBar = FindObjectOfType<InfectionProgressCounter>();
-                progressBar.IncreaseCountOne();
+                //var progressBar = FindObjectOfType<InfectionProgressCounter>();
+                    //progressBar.IncreaseCountOne();
             }
         }
     }

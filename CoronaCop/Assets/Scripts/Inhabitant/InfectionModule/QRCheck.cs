@@ -39,7 +39,7 @@ public class QRCheck : MonoBehaviour
 
     public bool NeedToCheck => _needToCheck;
     private CharacterMover playerMover;
-    [SerializeField] private float bonusMultiplier=1.1f;
+    [SerializeField] private float bonusMultiplier=1.2f;
     private float summaryTimeToCheck;
     private CharacterMover charMover;
     private void Start()
