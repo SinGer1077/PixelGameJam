@@ -75,7 +75,7 @@ public class InfectionState : MonoBehaviour
                 SetInfection();
                 _audio.Play();
                 var progressBar = FindObjectOfType<InfectionProgressCounter>();
-                progressBar.IncreaseCountTwo();
+                progressBar.IncreaseCountOne();
             }
         }
     }

@@ -65,12 +65,13 @@ public class QRCheck : MonoBehaviour
         {
             _timer = 0f;
             SetNeedToCheckFalse();
-            charMover.IncreaseMultiplier();
+            
             if (_infection.Infected)
             {
                 GetComponentInParent<Car>().CopSayGoOut(); //Гоним его в шею
                 _renderer.sprite = _positiveResultSprite;
                 Debug.Log("Чертила заражён, ломай его");
+                charMover.IncreaseMultiplier();
             }
             else
             {

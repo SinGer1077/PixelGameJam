@@ -8,9 +8,12 @@ public class MultiplierText : MonoBehaviour
     private CharacterMover playerMover;
     private LevelCore core;
     private float timer1=1;
+
+    private Text texter;
     // Start is called before the first frame update
     void Start()
     {
+        texter = gameObject.GetComponentInChildren<Text>();
         playerMover = FindObjectOfType<CharacterMover>();
         core = FindObjectOfType<LevelCore>();
     }
@@ -34,6 +37,23 @@ public class MultiplierText : MonoBehaviour
     public void CheckMultiplierToCanvas()
     {
         var x=playerMover.GetMultiplier();
-        gameObject.GetComponentInChildren<Text>().text = "BOOST: X" + x;
+        texter.text = "BOOST: X" + x;
+        if (x == 0)
+        {
+            texter.color=Color.black;
+        }
+
+        if (x == 1)
+        {
+            texter.color=Color.white;
+        }
+        if (x == 2)
+        {
+            texter.color=Color.yellow;
+        }
+        if (x >= 3)
+        {
+            texter.color=Color.red;
+        }
     }
 }
