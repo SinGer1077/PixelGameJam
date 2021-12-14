@@ -10,6 +10,8 @@ TagManager:
   - Inhabitant
   - Infection
   - Recreation
+  - BarrierBand
+  - ToInventory
   layers:
   - Default
   - TransparentFX

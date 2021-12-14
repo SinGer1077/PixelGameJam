@@ -255,7 +255,15 @@ public class Car : MonoBehaviour
         } 
     }
 
-IEnumerator fadeInAndOut(GameObject objectToFade, bool fadeIn, float duration)
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.tag == "BarrierBand")
+        {
+            manState = "runningOut";
+        }
+    }
+
+    IEnumerator fadeInAndOut(GameObject objectToFade, bool fadeIn, float duration)
 {
     float counter = 0f;
 
