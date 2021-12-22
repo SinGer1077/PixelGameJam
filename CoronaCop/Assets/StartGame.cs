@@ -7,6 +7,9 @@ using UnityEngine.SceneManagement;
 public class StartGame : MonoBehaviour
 {
     [SerializeField]
+    private Vector2 _gameResolution;
+
+    [SerializeField]
     private GameObject _menu;
 
     [SerializeField]
@@ -16,7 +19,7 @@ public class StartGame : MonoBehaviour
 
     private void Awake()
     {
-        Screen.SetResolution(800, 800, false);
+        Screen.SetResolution((int)_gameResolution.x, (int)_gameResolution.y, false);
         
     }
 
