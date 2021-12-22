@@ -29,6 +29,8 @@ public class InfectionState : MonoBehaviour
     private bool _readyToInfect = false;
 
     private float _timer = 0f;
+    [SerializeField] private GameObject QrCheckObj;
+    private QRCheck QrCheck;
 
     private bool inParkState = false;
     //private ParticleSystem em;
@@ -38,6 +40,7 @@ public class InfectionState : MonoBehaviour
     //private ParticleSystem.EmissionModule emEn;
     private void Start()
     {
+       // QrCheck = QrCheckObj.GetComponent<QRCheck>();
         particles = GetComponentInChildren<ParticleSystem>();
         particles.GetComponent<Renderer>().enabled = false;
         if (_infected)
@@ -57,6 +60,7 @@ public class InfectionState : MonoBehaviour
         _renderer.material = _infectedMaterial;
        // emEn.enabled = true;
         timerEm = 3;
+        //QrCheck.ResetTimeToUpdateCheck();
 
     }
 

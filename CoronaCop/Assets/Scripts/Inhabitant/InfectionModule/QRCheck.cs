@@ -42,6 +42,8 @@ public class QRCheck : MonoBehaviour
     [SerializeField] private float bonusMultiplier=1.2f;
     private float summaryTimeToCheck;
     private CharacterMover charMover;
+    [SerializeField] private AudioSource infected;
+    [SerializeField] private AudioSource notInfected;
     private void Start()
     {
         
@@ -69,14 +71,15 @@ public class QRCheck : MonoBehaviour
             if (_infection.Infected)
             {
                 GetComponentInParent<Car>().CopSayGoOut(); //Гоним его в шею
-                _renderer.sprite = _positiveResultSprite;
-                Debug.Log("Чертила заражён, ломай его");
+                _renderer.sprite = _positiveResultSprite; 
+                infected.Play();
+                //Debug.Log("Чертила заражён, ломай его");
                 charMover.IncreaseMultiplier();
             }
             else
             {
                 _renderer.sprite = _negativeResultSprite;
-                Debug.Log("Чертила чист, отпускаем");
+                notInfected.Play();
             }
             Invoke("ResetToDefaulImage", 0.8f);
         }
@@ -90,6 +93,11 @@ public class QRCheck : MonoBehaviour
                 SetNeedToCheckTrue();
             }
         }
+    }
+
+    public void ResetTimeToUpdateCheck()
+    {
+        _timeToUpdateCheck = 0;
     }
 
     public void BeginCheckQR()

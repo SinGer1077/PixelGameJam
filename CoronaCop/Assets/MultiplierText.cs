@@ -8,7 +8,12 @@ public class MultiplierText : MonoBehaviour
     private CharacterMover playerMover;
     private LevelCore core;
     private float timer1=1;
-
+    [SerializeField] private Sprite level0;
+    [SerializeField] private Sprite level1;
+    [SerializeField] private Sprite level2;
+    [SerializeField] private Sprite level3;
+    [SerializeField] private Sprite level4;
+    [SerializeField] private Sprite level5;
     private Text texter;
     // Start is called before the first frame update
     void Start()

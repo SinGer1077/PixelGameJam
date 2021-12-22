@@ -221,7 +221,6 @@ public class Car : MonoBehaviour
             }
             
         }
-        Debug.Log("Рекреация найдена"+target);
         return target;
     }
 

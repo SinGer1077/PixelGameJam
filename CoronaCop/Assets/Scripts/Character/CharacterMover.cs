@@ -4,36 +4,42 @@ using UnityEngine.UI;
 
 public class CharacterMover : MonoBehaviour
 {
-    [SerializeField]
-    private float _characterSpeed;
+    [SerializeField] private float _characterSpeed;
 
-    [SerializeField]
-    private ParticleSystem _runSystem;    
+    [SerializeField] private ParticleSystem _runSystem;
 
     public Vector3 _movementDirection;
     private Animator anim;
-    private string state="stay";
+    private string state = "stay";
     private bool borderBrake = false;
-    [SerializeField] private float speedMultiplier=1.2f;
+    [SerializeField] private float speedMultiplier = 1.2f;
     [SerializeField] private float speedMultTimer;
     [SerializeField] private int speedMultipleMax;
-    public int currentSpeedMultiple;
+    private int currentSpeedMultiple = 0;
     private float timer = 0;
-    private MultiplierText texter;
+    [SerializeField] private GameObject UIBoost;
+    private BoostImage imager;
+    private float _currentBoostTimer;
+    private float[] timing;
+    private int currentBoostTimer = 0;
+
     private void Start()
     {
-        anim=GetComponentInChildren<Animator>();
-        texter = FindObjectOfType<MultiplierText>();
+        timing = new float[6] {0, 12f, 10f, 8f, 6f, 5f};
+        imager = UIBoost.GetComponent<BoostImage>();
+        anim = GetComponentInChildren<Animator>();
+        //imager = FindObjectOfType<BoostImage>();
     }
 
     private void Update()
     {
-        if (currentSpeedMultiple>=1) timer += Time.deltaTime;
-        if (timer >= speedMultTimer)
-        {
-            currentSpeedMultiple = 0;
+        if (currentSpeedMultiple >= 1) timer += Time.deltaTime;
+        if (timer >= timing[currentSpeedMultiple] && currentSpeedMultiple != 0) 
+
+{
+            currentSpeedMultiple -=1;
             timer = 0;
-            texter.CheckMultiplierToCanvas();
+            imager.CheckMultiplierToCanvas();
             
         }
         float horizontal = Input.GetAxis("Horizontal");
@@ -64,14 +70,8 @@ public class CharacterMover : MonoBehaviour
         }
         if (horizontal != 0f || vertical != 0f)
         {
-            
-
-                //anim.enabled = false;
-                //anim.SetBool("staying",false);
-                anim.SetTrigger("run");
-                //anim.enabled = true;
+            anim.SetTrigger("run");
                 state = "run";
-                //anim.SetBool("running",true);
         } else {
             if (state == "run")
             {                
@@ -85,6 +85,11 @@ public class CharacterMover : MonoBehaviour
     {
         return currentSpeedMultiple;
     }
+
+    public float GetTimer()
+    {
+        return timing[currentSpeedMultiple];
+    }
     public void IncreaseMultiplier()
     {
         timer = 0;
@@ -94,7 +99,7 @@ public class CharacterMover : MonoBehaviour
             currentSpeedMultiple = speedMultipleMax;
         } else currentSpeedMultiple+=1;
 
-        texter.CheckMultiplierToCanvas();
+        imager.CheckMultiplierToCanvas();
     }
     private void StopAnimate()
     {

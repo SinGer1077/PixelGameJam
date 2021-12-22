@@ -62,6 +62,7 @@ public class InfectionProgressCounter : MonoBehaviour
         _currentCount++;
         _plusOne.Play();
         MoveProgressBar(1);
+        
         CheckGameLosed();
         Invoke("StopParticleSystemFirst", 1f);
     }
