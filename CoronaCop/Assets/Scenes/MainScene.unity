@@ -2649,12 +2649,12 @@ PrefabInstance:
     - target: {fileID: 777331844260785701, guid: 52b86cd8ababb6949aa2461781a6bb33,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 777331844260785701, guid: 52b86cd8ababb6949aa2461781a6bb33,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 777331844294660396, guid: 52b86cd8ababb6949aa2461781a6bb33,
         type: 3}
