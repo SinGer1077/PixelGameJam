@@ -2649,12 +2649,12 @@ PrefabInstance:
     - target: {fileID: 777331844260785701, guid: 52b86cd8ababb6949aa2461781a6bb33,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 777331844260785701, guid: 52b86cd8ababb6949aa2461781a6bb33,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 777331844294660396, guid: 52b86cd8ababb6949aa2461781a6bb33,
         type: 3}
@@ -2724,12 +2724,12 @@ PrefabInstance:
     - target: {fileID: 777331844788052700, guid: 52b86cd8ababb6949aa2461781a6bb33,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 777331844788052700, guid: 52b86cd8ababb6949aa2461781a6bb33,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 777331844874258348, guid: 52b86cd8ababb6949aa2461781a6bb33,
         type: 3}
@@ -2874,7 +2874,7 @@ PrefabInstance:
     - target: {fileID: 777331845270751598, guid: 52b86cd8ababb6949aa2461781a6bb33,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 777331845674611391, guid: 52b86cd8ababb6949aa2461781a6bb33,
         type: 3}
@@ -3075,7 +3075,7 @@ PrefabInstance:
         type: 3}
       propertyPath: progressBar
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 455440582}
     - target: {fileID: 4228267131089911803, guid: 52b86cd8ababb6949aa2461781a6bb33,
         type: 3}
       propertyPath: lengthInSec
@@ -4901,7 +4901,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1453461905
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7552,8 +7552,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6030858499086589042, guid: 89f02e63d632bcf4dbaca29a9c3d90f1,
         type: 3}
+      propertyPath: speedMultiplier
+      value: 1.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6030858499086589042, guid: 89f02e63d632bcf4dbaca29a9c3d90f1,
+        type: 3}
       propertyPath: speedMultipleMax
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6030858499086589043, guid: 89f02e63d632bcf4dbaca29a9c3d90f1,
         type: 3}
